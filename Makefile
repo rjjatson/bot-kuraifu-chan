@@ -6,7 +6,7 @@ build:
 	docker build --tag="$(SERVICE):latest" .
 
 run:
-	docker run $(SERVICE):latest
+	docker run -p 8080:8080 $(SERVICE):latest
 
 #push:
 #	docker tag $(SERVICE):latest $(ECR_ADDRESS):latest
