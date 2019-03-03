@@ -11,9 +11,4 @@ build:
 	docker build --tag="$(SERVICE):latest" .
 
 run:
-	docker run --rm -d -p 8080:8080 --name $(SERVICE) $(SERVICE):latest
-
-remove:
-	-docker rm $(SERVICE) -f
-
-rebuild: build remove run
+	docker-compose up

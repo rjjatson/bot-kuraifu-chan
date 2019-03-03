@@ -1,0 +1,10 @@
+version: '3'
+services:
+  kuraifu:
+    image: bot-kuraifu-chan:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - KURAIFU_LINE_CHANNEL_SECRET=${KURAIFU_LINE_CHANNEL_SECRET}
+      - KURAIFU_LINE_ACCESS_TOKEN=${KURAIFU_LINE_ACCESS_TOKEN}
+
