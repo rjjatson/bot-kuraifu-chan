@@ -1,5 +1,4 @@
 SERVICE="bot-kuraifu-chan"
-#SERVICE=health
 
 build:
 	docker run --rm -v $(CURDIR):/usr/src/$(SERVICE) -w /usr/src/$(SERVICE) golang:1.12-alpine \
@@ -7,8 +6,9 @@ build:
 	docker build --tag="$(SERVICE):latest" .
 
 run:
-	docker run -p 8080:8080 $(SERVICE):latest
+	docker run --rm -d -p 8080:8080 --name $(SERVICE) $(SERVICE):latest
 
-#push:
-#	docker tag $(SERVICE):latest $(ECR_ADDRESS):latest
-#	docker push $(ECR_ADDRESS):latest
+remove:
+	docker rm $(SERVICE) -f
+
+rebuild: build remove run
