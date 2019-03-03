@@ -23,7 +23,7 @@ func main() {
 
 	bot, err := linebot.New(cfg.LineChannelSecret, cfg.LineChannelSecret)
 	if err != nil {
-		log.Fatal("unable to create line client ", err.Error())
+		//log.Fatal("unable to create line client ", err.Error())
 	}
 
 	router := gin.Default()

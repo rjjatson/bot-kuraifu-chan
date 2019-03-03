@@ -11,4 +11,7 @@ build:
 	docker build --tag="$(SERVICE):latest" .
 
 run:
-	docker-compose up
+	docker-compose up -d
+
+log:
+	docker-compose logs -f

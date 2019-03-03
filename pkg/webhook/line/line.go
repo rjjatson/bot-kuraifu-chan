@@ -22,6 +22,5 @@ func New(bot *linebot.Client) *LineClient {
 
 // HandleWebHook handles line webhook
 func (lc *LineClient) HandleWebHook(c *gin.Context) {
-	c.Writer.WriteHeader(http.StatusOK)
-	_, _ = c.Writer.WriteString(http.StatusText(http.StatusOK))
+	c.Status(http.StatusOK)
 }
