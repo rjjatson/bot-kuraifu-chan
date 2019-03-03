@@ -17,4 +17,5 @@ func SetupRoute(basePath string,
 	})
 
 	router.POST(basePath+"/webhook/line", lineClient.HandleWebHook)
+	router.POST(basePath+"/callback", lineClient.HandleWebHook)
 }
