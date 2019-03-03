@@ -6,7 +6,7 @@ import (
 
 // SetupRoute add routes to gin router
 func SetupRoute(router *gin.Engine) {
-	router.GET("/", func(c *gin.Context) {
-		_, _ = c.Writer.Write([]byte("fuwaaaaaa"))
+	router.GET("/kuraifu/ping", func(c *gin.Context) {
+		_, _ = c.Writer.Write([]byte("fuwaaaaaa~"))
 	})
 }
