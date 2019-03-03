@@ -2,17 +2,20 @@ package main
 
 import (
 	"fmt"
-	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/rjjatson/bot-kuraifu-chan/api/webservice"
 )
 
 func main() {
 	fmt.Printf("bot-kuraifu-chan is running...")
+	router := gin.Default()
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		_, _ = fmt.Fprintf(w, "fuwaaa~")
-	})
-	err := http.ListenAndServe(":8080", nil)
+	webservice.SetupRoute(router)
+
+	err := router.Run(":8080")
 	if err != nil {
+		fmt.Printf("bot-kuraifu-chan was stopped...")
 		panic(err)
 	}
 }
