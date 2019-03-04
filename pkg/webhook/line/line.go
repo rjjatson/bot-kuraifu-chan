@@ -1,7 +1,7 @@
 package line
 
 import (
-	"net/http"
+	"fmt"
 
 	"github.com/line/line-bot-sdk-go/linebot"
 
@@ -22,5 +22,5 @@ func New(bot *linebot.Client) *LineClient {
 
 // HandleWebHook handles line webhook
 func (lc *LineClient) HandleWebHook(c *gin.Context) {
-	c.Status(http.StatusOK)
+	_, _ = fmt.Fprint(c.Writer, "Welcome to my website!")
 }
