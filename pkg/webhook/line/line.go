@@ -3,9 +3,10 @@ package line
 import (
 	"net/http"
 
-	"github.com/line/line-bot-sdk-go/linebot"
+	"github.com/sirupsen/logrus"
 
 	"github.com/gin-gonic/gin"
+	"github.com/line/line-bot-sdk-go/linebot"
 )
 
 // LineClient wraps linebot client
@@ -22,6 +23,21 @@ func New(bot *linebot.Client) *LineClient {
 
 // HandleWebHook handles line webhook
 func (lc *LineClient) HandleWebHook(c *gin.Context) {
+	events, err := lc.bot.ParseRequest(c.Request)
+	if err != nil {
+		logrus.Error("unable to parse request: ", err)
+	}
+
+	for _, evt := range events {
+		logrus.Info("received message : ")
+		switch evt.Type {
+		case linebot.EventTypeMessage:
+			msg := evt.Message.(*linebot.TextMessage)
+			logrus.Info("text message received: ", msg.Text)
+			lc.bot.ReplyMessage(evt.ReplyToken, linebot.NewTextMessage(msg.Text+" too"))
+		}
+	}
+
 	c.Status(http.StatusOK)
 	c.Writer.Header().Add("Content-Type", "application/json")
 }
