@@ -1,8 +1,6 @@
 package line
 
 import (
-	"net/http"
-
 	"github.com/sirupsen/logrus"
 
 	"github.com/gin-gonic/gin"
@@ -33,10 +31,10 @@ func (lc *LineClient) HandleWebHook(c *gin.Context) {
 		case linebot.EventTypeMessage:
 			msg := evt.Message.(*linebot.TextMessage)
 			logrus.Info("text message received: ", msg.Text)
-			_, _ = lc.bot.ReplyMessage(evt.ReplyToken, linebot.NewTextMessage(msg.Text+" too")).Do()
+			_, err = lc.bot.ReplyMessage(evt.ReplyToken, linebot.NewTextMessage(msg.Text+" too")).Do()
+			if err != nil {
+				logrus.Error("unable to send reply: ", err)
+			}
 		}
 	}
-
-	c.Status(http.StatusOK)
-	c.Writer.Header().Add("Content-Type", "application/json")
 }
