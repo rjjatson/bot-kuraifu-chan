@@ -29,12 +29,11 @@ func (lc *LineClient) HandleWebHook(c *gin.Context) {
 	}
 
 	for _, evt := range events {
-		logrus.Info("received message : ")
 		switch evt.Type {
 		case linebot.EventTypeMessage:
 			msg := evt.Message.(*linebot.TextMessage)
 			logrus.Info("text message received: ", msg.Text)
-			lc.bot.ReplyMessage(evt.ReplyToken, linebot.NewTextMessage(msg.Text+" too"))
+			_, _ = lc.bot.ReplyMessage(evt.ReplyToken, linebot.NewTextMessage(msg.Text+" too")).Do()
 		}
 	}
 
