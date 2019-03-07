@@ -21,6 +21,8 @@ func main() {
 		log.Fatal("unable to process env variable ", err.Error())
 	}
 
+	fmt.Printf("debug config : %#v", cfg)
+
 	bot, err := linebot.New(cfg.LineChannelSecret, cfg.LineChannelSecret)
 	if err != nil {
 		log.Fatal("unable to create line client ", err.Error())
