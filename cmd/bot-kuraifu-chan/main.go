@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -21,9 +22,9 @@ func main() {
 		log.Fatal("unable to process env variable ", err.Error())
 	}
 
-	fmt.Printf("debug config : %#v", cfg)
+	fmt.Printf("config : \n%v", json.MarshalIndent(cfg, "", "    "))
 
-	bot, err := linebot.New(cfg.LineChannelSecret, cfg.LineChannelSecret)
+	bot, err := linebot.New(cfg.LineChannelSecret, cfg.LineAccessToken)
 	if err != nil {
 		log.Fatal("unable to create line client ", err.Error())
 	}
