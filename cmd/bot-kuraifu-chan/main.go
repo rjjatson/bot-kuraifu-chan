@@ -7,10 +7,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/kelseyhightower/envconfig"
-	"github.com/line/line-bot-sdk-go/linebot"
 	"github.com/rjjatson/bot-kuraifu-chan/api/webservice"
 	"github.com/rjjatson/bot-kuraifu-chan/config"
-	"github.com/rjjatson/bot-kuraifu-chan/pkg/webhook/line"
+	"github.com/rjjatson/bot-kuraifu-chan/internal/webhook/line"
 )
 
 func main() {
@@ -25,17 +24,13 @@ func main() {
 	cf, _ := json.MarshalIndent(cfg, "", "    ")
 	fmt.Printf("config : \n%v\n", string(cf))
 
-	bot, err := linebot.New(cfg.LineChannelSecret, cfg.LineAccessToken)
-	if err != nil {
-		log.Fatal("unable to create line client ", err.Error())
-	}
+	linClient := line.New(cfg.LineChannelID, cfg.LineChannelSecret)
 
-	router := gin.Default()
+	r := gin.Default()
 	webservice.SetupRoute(cfg.BasePath,
-		line.New(bot),
-		router)
-
-	err = router.Run(":" + cfg.BasePort)
+		linClient,
+		r)
+	err = r.Run(":" + cfg.BasePort)
 	if err != nil {
 		fmt.Printf("bot-kuraifu-chan was stopped...")
 		log.Fatal(err.Error())
