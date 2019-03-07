@@ -23,7 +23,7 @@ func main() {
 	}
 
 	cf, _ := json.MarshalIndent(cfg, "", "    ")
-	fmt.Printf("config : \n%v", string(cf))
+	fmt.Printf("config : \n%v\n", string(cf))
 
 	bot, err := linebot.New(cfg.LineChannelSecret, cfg.LineAccessToken)
 	if err != nil {
