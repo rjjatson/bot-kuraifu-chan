@@ -22,7 +22,8 @@ func main() {
 		log.Fatal("unable to process env variable ", err.Error())
 	}
 
-	fmt.Printf("config : \n%v", json.MarshalIndent(cfg, "", "    "))
+	cf, _ := json.MarshalIndent(cfg, "", "    ")
+	fmt.Printf("config : \n%v", string(cf))
 
 	bot, err := linebot.New(cfg.LineChannelSecret, cfg.LineAccessToken)
 	if err != nil {
